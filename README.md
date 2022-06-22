@@ -30,3 +30,7 @@ Input: Kevin-25;Simon-22;Larry-25;Anna-22
 Output: 20:Anna-22;Simon-22;Kevin-25;Larry-25
 Input: Kevin-25;Nora-31;John-24;Simon-22;Sam-30
 Output: 20:Simon-22;John-24;Kevin-25;30:Sam-30;Nora-31
+
+ALL Test cases passed: HURRAY
+
+<img width="1369" alt="SUCCESS" src="https://user-images.githubusercontent.com/20887138/175120103-f6d4e816-719f-446e-9801-e413880f33da.png">
