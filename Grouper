@@ -1,0 +1,52 @@
+package my;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+/**
+ * Author : Nancy Chauhan
+ * Date: 23rd june 2022
+ * CoderByte Challenge
+ */
+ 
+class Grouper {
+
+    public static String Grouper(String str) {
+
+        Map<Integer, List<String>> map = new TreeMap<>();
+
+        String[] personEntries = str.split(";");
+
+        for (String personEntry : personEntries){
+            String age = personEntry.split("-")[1];
+            String lastDigitDropped = age.substring(0,age.length() - 1);
+            int ageHint = lastDigitDropped.isEmpty() ? 0 : Integer.parseInt(lastDigitDropped);
+            List<String> persons = new LinkedList<>();
+            if(map.get(ageHint*10) == null){
+                persons.add(personEntry);
+                map.put(ageHint*10 , persons);
+            } else {
+                map.get(ageHint*10).add(personEntry);
+            }
+
+        }
+        return prepareFinalString(map);
+    }
+
+    private static String prepareFinalString(Map<Integer, List<String>> map) {
+        String result = map.entrySet()
+                .stream()
+                .map(e -> e.getKey() + ":" + e.getValue()
+                        .stream()
+                        .sorted((s1,s2) -> s1.compareTo(s2))
+                        .sorted((e1,e2) -> Integer.compare(Integer.parseInt(e1.split("-")[1]),Integer.parseInt(e2.split("-")[1])))
+                        .collect(Collectors.joining(";")))
+                .collect(Collectors.joining(";"));
+        return result;
+    }
+
+    public static void main (String[] args) {
+        Scanner s = new Scanner(System.in);
+        System.out.print(Grouper("Kevin-25;Simon-22;Larry-25;Anna-22"));
+    }
+}
