@@ -15,10 +15,18 @@ class Grouper {
 
         List<String> list = Arrays.asList(str.split(";"));
 
-        map = list.stream()
+        // This was my first try: SUCCESS
+        /*map = list.stream()
                 .map(x-> x.split("-"))
                 .collect(Collectors.groupingBy(x-> Integer.parseInt(x[1].substring(0, x.length-1)) * 10,
-                Collectors.mapping(e -> e[0] + "-" + e[1], Collectors.toList())));
+                Collectors.mapping(e -> e[0] + "-" + e[1], Collectors.toList())));*/
+        
+        // This was my second try: SUCCESS
+        /*map = list.stream()
+               .collect(Collectors.groupingBy(x-> Integer.parseInt(x.split("-")[1].substring(0, x.split("-")[1].length()-1)) * 10, Collectors.toList()));*/
+
+        // The shortest and BEST SOLUTION working
+        map = list.stream().collect(Collectors.groupingBy(x-> Math.round((Integer.parseInt(x.split("-")[1]) / 10 )) * 10, Collectors.toList()));
 
         return prepareFinalString(map);
     }
