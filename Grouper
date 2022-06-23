@@ -9,25 +9,17 @@ import java.util.stream.Collectors;
  
 class Grouper {
 
-    public static String Grouper(String str) {
+   public static String Grouper(String str) {
 
         Map<Integer, List<String>> map = new TreeMap<>();
 
-        String[] personEntries = str.split(";");
+        List<String> list = Arrays.asList(str.split(";"));
 
-        for (String personEntry : personEntries){
-            String age = personEntry.split("-")[1];
-            String lastDigitDropped = age.substring(0,age.length() - 1);
-            int ageHint = lastDigitDropped.isEmpty() ? 0 : Integer.parseInt(lastDigitDropped);
-            List<String> persons = new LinkedList<>();
-            if(map.get(ageHint*10) == null){
-                persons.add(personEntry);
-                map.put(ageHint*10 , persons);
-            } else {
-                map.get(ageHint*10).add(personEntry);
-            }
+        map = list.stream()
+                .map(x-> x.split("-"))
+                .collect(Collectors.groupingBy(x-> Integer.parseInt(x[1].substring(0, x.length-1)) * 10,
+                Collectors.mapping(e -> e[0] + "-" + e[1], Collectors.toList())));
 
-        }
         return prepareFinalString(map);
     }
 
